@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nabídka | {{nazev_firmy}}</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #28a745;
+            --accent-color: #ffc107;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --border-color: #dee2e6;
+            
+            /* Barvy pro jednotlivá opatření */
+            --fve-color: #4dabf5;
+            --tc-color: #ff9966;
+            --zs-color: #86c7b2;
+            --zk-color: #7986cb;
+            --fov-color: #ffce3a;
+            --okna-color: #9ccc65;
+            --zf-color: #f06292;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 180px;
+        }
+        
+        .header-text {
+            text-align: right;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+        }
+        
+        .client-info {
+            background-color: var(--light-bg);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .solution-summary {
+            margin-bottom: 30px;
+        }
+        
+        .solution-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        /* Barevné záhlaví pro jednotlivá opatření */
+        .fve-header {
+            background-color: var(--fve-color);
+            color: white;
+        }
+        
+        .tc-header {
+            background-color: var(--tc-color);
+            color: white;
+        }
+        
+        .zs-header {
+            background-color: var(--zs-color);
+            color: white;
+        }
+        
+        .zk-header {
+            background-color: var(--zk-color);
+            color: white;
+        }
+        
+        .fov-header {
+            background-color: var(--fov-color);
+            color: white;
+        }
+        
+        .okna-header {
+            background-color: var(--okna-color);
+            color: white;
+        }
+        
+        .zf-header {
+            background-color: var(--zf-color);
+            color: white;
+        }
+        
+        .solution-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .solution-content {
+            padding: 20px;
+            display: flex;
+        }
+        
+        .solution-image {
+            flex: 0 0 200px;
+            margin-right: 20px;
+        }
+        
+        .solution-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .solution-details {
+            flex: 1;
+        }
+        
+        .notes-box {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #fff8e1;
+            border-left: 3px solid #ffc107;
+            border-radius: 4px;
+        }
+        
+        .price-section {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .price-table th, .price-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .price-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .price-summary {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+        }
+        
+        .dotace-info {
+            background-color: #e9ffd9;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .benefits {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .benefit-item {
+            flex: 0 0 32%;
+            text-align: center;
+            padding: 20px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+        }
+        
+        .benefit-icon {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .contact {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .contact-text {
+            flex: 1;
+        }
+        
+        .contact-photo {
+            flex: 0 0 80px;
+            margin-right: 20px;
+        }
+        
+        .contact-photo img {
+            width: 100%;
+            border-radius: 50%;
+        }
+        
+        .next-steps {
+            margin-bottom: 30px;
+        }
+        
+        .next-steps ol {
+            padding-left: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--light-bg);
+            font-size: 14px;
+            margin-top: 30px;
+        }
+        
+        .highlight {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            header {
+                padding: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="{{logo_url}}" alt="Logo společnosti" class="logo">
+                <div class="header-text">
+                    <h1>INDIVIDUÁLNÍ NABÍDKA</h1>
+                    <p>Číslo nabídky: {{cislo_nabidky}} | Platnost do: {{platnost_do}}</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="client-info">
+            <h2>Informace o klientovi</h2>
+            <p><strong>Jméno:</strong> {{jmeno_klienta}}</p>
+            <p><strong>Adresa realizace:</strong> {{adresa_realizace}}</p>
+            <p><strong>Kontakt:</strong> {{telefon_klienta}}, {{email_klienta}}</p>
+        </div>
+        
+        <div class="solution-summary">
+            <h2>Shrnutí nabízeného řešení</h2>
+            <p>Na základě vašich požadavků a technického posouzení jsme připravili kompletní řešení, které zahrnuje následující realizace. Toto řešení je optimalizováno pro maximální energetickou úsporu a využití dotačních možností programu <strong>{{typ_dotace}}</strong>.</p>
+        </div>
+        
+        <!-- Fotovoltaická elektrárna -->
+        {{#if fve_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header fve-header">
+                <h3>Fotovoltaická elektrárna</h3>
+                <span class="price">{{fve_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{fve_obrazek}}" alt="Fotovoltaická elektrárna">
+                </div>
+                <div class="solution-details">
+                    <p>{{fve_popis}}</p>
+                    <ul>
+                        <li><strong>Instalovaný výkon:</strong> {{fve_vykon}} kWp</li>
+                        <li><strong>Typ panelů:</strong> {{fve_typ_panelu}}</li>
+                        <li><strong>Bateriové úložiště:</strong> {{fve_baterie}}</li>
+                        {{#if fve_ma_baterii}}
+                        <li><strong>Kapacita baterie:</strong> {{fve_kapacita_baterie}} kWh</li>
+                        {{/if}}
+                        <li><strong>Roční výroba elektřiny:</strong> {{fve_rocni_vyroba}} kWh</li>
+                    </ul>
+                    {{#if fve_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{fve_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Tepelné čerpadlo -->
+        {{#if tc_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header tc-header">
+                <h3>Tepelné čerpadlo</h3>
+                <span class="price">{{tc_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{tc_obrazek}}" alt="Tepelné čerpadlo">
+                </div>
+                <div class="solution-details">
+                    <p>{{tc_popis}}</p>
+                    <ul>
+                        <li><strong>Typ tepelného čerpadla:</strong> {{tc_typ}}</li>
+                        <li><strong>Bojler:</strong> {{tc_bojler}}</li>
+                        <li><strong>Akumulační nádrž pro topný okruh:</strong> {{tc_akumulacni_nadrz}}</li>
+                        <li><strong>Konstrukce:</strong> {{tc_konstrukce}}</li>
+                        <li><strong>Materiál:</strong> {{tc_material}}</li>
+                    </ul>
+                    {{#if tc_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{tc_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Zateplení střechy/půdy -->
+        {{#if zs_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header zs-header">
+                <h3>Zateplení střechy/půdy</h3>
+                <span class="price">{{zs_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{zs_obrazek}}" alt="Zateplení střechy">
+                </div>
+                <div class="solution-details">
+                    <p>{{zs_popis}}</p>
+                    <ul>
+                        <li><strong>Typ zateplení:</strong> {{zs_typ_zatepleni}}</li>
+                        <li><strong>Typ izolace:</strong> {{zs_typ_izolace}}</li>
+                        <li><strong>Plocha zateplení:</strong> {{zs_plocha}} m²</li>
+                        <li><strong>Tloušťka zateplení:</strong> {{zs_tloustka}} cm</li>
+                        <li><strong>Servisní lávka:</strong> {{zs_servisni_lavka}}</li>
+                        <li><strong>Záklop:</strong> {{zs_zaklop}}</li>
+                    </ul>
+                    {{#if zs_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{zs_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Zateplení sklepu -->
+        {{#if zk_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header zk-header">
+                <h3>Zateplení sklepu</h3>
+                <span class="price">{{zk_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{zk_obrazek}}" alt="Zateplení sklepu">
+                </div>
+                <div class="solution-details">
+                    <p>{{zk_popis}}</p>
+                    <ul>
+                        <li><strong>Typ zateplení:</strong> {{zk_typ_zatepleni}}</li>
+                        <li><strong>Tloušťka izolace:</strong> {{zk_tloustka}} cm</li>
+                    </ul>
+                    {{#if zk_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{zk_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Fotovoltaický ohřev vody -->
+        {{#if fov_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header fov-header">
+                <h3>Fotovoltaický ohřev vody</h3>
+                <span class="price">{{fov_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{fov_obrazek}}" alt="Fotovoltaický ohřev vody">
+                </div>
+                <div class="solution-details">
+                    <p>{{fov_popis}}</p>
+                    <ul>
+                        <li><strong>Počet panelů:</strong> {{fov_pocet_panelu}} ks</li>
+                        <li><strong>Výkon:</strong> {{fov_vykon}} kWp</li>
+                        <li><strong>Bojler:</strong> {{fov_bojler}}</li>
+                        <li><strong>Konstrukce:</strong> {{fov_konstrukce}}</li>
+                        <li><strong>Regulátor:</strong> {{fov_regulator}}</li>
+                    </ul>
+                    {{#if fov_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{fov_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Výměna oken a dveří -->
+        {{#if okna_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header okna-header">
+                <h3>Výměna oken a dveří</h3>
+                <span class="price">{{okna_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{okna_obrazek}}" alt="Výměna oken a dveří">
+                </div>
+                <div class="solution-details">
+                    <p>{{okna_popis}}</p>
+                    <ul>
+                        <li><strong>Počet oken:</strong> {{okna_pocet}} ks</li>
+                        <li><strong>Počet dveří:</strong> {{dvere_pocet}} ks</li>
+                        <li><strong>Parapety vnitřní:</strong> {{okna_parapety_vnitrni}}</li>
+                        <li><strong>Parapety venkovní:</strong> {{okna_parapety_venkovni}}</li>
+                        <li><strong>Zapravení:</strong> {{okna_zapraveni}}</li>
+                    </ul>
+                    {{#if okna_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{okna_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Zateplení fasády -->
+        {{#if zf_aktivni}}
+        <div class="solution-item">
+            <div class="solution-header zf-header">
+                <h3>Zateplení fasády</h3>
+                <span class="price">{{zf_cena}} Kč</span>
+            </div>
+            <div class="solution-content">
+                <div class="solution-image">
+                    <img src="{{zf_obrazek}}" alt="Zateplení fasády">
+                </div>
+                <div class="solution-details">
+                    <p>{{zf_popis}}</p>
+                    <ul>
+                        <li><strong>Plocha zateplení:</strong> {{zf_plocha}} m²</li>
+                        <li><strong>Tloušťka izolace:</strong> {{zf_tloustka}} cm</li>
+                        <li><strong>Typ izolace:</strong> {{zf_typ_izolace}}</li>
+                    </ul>
+                    {{#if zf_poznamka}}
+                    <div class="notes-box">
+                        <strong>Poznámka:</strong> {{zf_poznamka}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        
+        <div class="price-section">
+            <h2>Cenová kalkulace</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Položka</th>
+                        <th>Cena</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#if fve_aktivni}}
+                    <tr>
+                        <td>Fotovoltaická elektrárna</td>
+                        <td>{{fve_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                    
+                    {{#if tc_aktivni}}
+                    <tr>
+                        <td>Tepelné čerpadlo</td>
+                        <td>{{tc_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                    
+                    {{#if zs_aktivni}}
+                    <tr>
+                        <td>Zateplení střechy/půdy</td>
+                        <td>{{zs_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                    
+                    {{#if zk_aktivni}}
+                    <tr>
+                        <td>Zateplení sklepu</td>
+                        <td>{{zk_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                    
+                    {{#if fov_aktivni}}
+                    <tr>
+                        <td>Fotovoltaický ohřev vody</td>
+                        <td>{{fov_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                    
+                    {{#if okna_aktivni}}
+                    <tr>
+                        <td>Výměna oken a dveří</td>
+                        <td>{{okna_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                    
+                    {{#if zf_aktivni}}
+                    <tr>
+                        <td>Zateplení fasády</td>
+                        <td>{{zf_cena}} Kč</td>
+                    </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+            <div class="price-summary">
+                <p>Celková cena bez DPH: {{cena_bez_dph}} Kč</p>
+                <p>DPH ({{sazba_dph}}%): {{dph}} Kč</p>
+                <p>Celková cena včetně DPH: {{cena_s_dph}} Kč</p>
+            </div>
+        </div>
+        
+        <div class="dotace-info">
+            <h2>Informace o dotaci</h2>
+            <p>Na tuto realizaci můžete získat dotaci z programu <strong>{{typ_dotace}}</strong>.</p>
+            <p><strong>Předpokládaná výše dotace: {{vyse_dotace}} Kč</strong></p>
+            <p>Konečná cena po odečtení dotace: <span class="highlight">{{cena_po_dotaci}} Kč</span></p>
+            <p>{{popis_dotace}}</p>
+        </div>
+        
+
+        
+        <div class="contact">
+            <div class="contact-text">
+                <h3>Váš obchodní zástupce</h3>
+                <p><strong>{{jmeno_zastupce}}</strong></p>
+                <p>Telefon: {{telefon_zastupce}} | Email: {{email_zastupce}}</p>
+            </div>
+        </div>
+        
+        <div class="next-steps">
+            <h2>Další kroky</h2>
+            <ol>
+                <li>Schválení nabídky</li>
+                <li>Podpis smlouvy</li>
+                <li>Vyplacení dotace</li>
+                <li>Zajištění financování a podání žádosti o dotaci</li>
+                <li>Realizace projektu</li>
+            </ol>
+        </div>
+        
+        <footer>
+            <p>{{nazev_firmy}} | IČ: {{ic}} | DIČ: {{dic}} | {{adresa_firmy}} | {{kontakt_firma}}</p>
+            <p>Tato nabídka je platná do {{platnost_do}}.</p>
+            <p class="legal-notice">Tato nabídka je pouze indikativní a nezavazuje žádnou ze stran k uzavření smlouvy. Přesný rozsah prací, materiály a konečná cena budou stanoveny na základě osobní prohlídky a detailního zaměření objektu. Všechny uvedené ceny jsou orientační a mohou se změnit v závislosti na aktuálních cenách materiálů a konkrétních požadavcích klienta. Výše dotace je stanovena na základě aktuálně dostupných informací o dotačních programech a může se změnit v závislosti na podmínkách konkrétního dotačního titulu v době podání žádosti.</p>
+        </footer>
+    </div>
+</body>
+</html>
